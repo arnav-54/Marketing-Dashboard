@@ -1,10 +1,7 @@
 import { useEffect } from 'react'
 import { AlertCircle, X, CheckCircle, Info } from 'lucide-react'
 
-/**
- * Toast notification — auto-dismisses after `duration` ms.
- * Props: message, type ('error'|'success'|'info'), onClose
- */
+
 export function Toast({ message, type = 'error', onClose, duration = 5000 }) {
     useEffect(() => {
         if (!message) return
@@ -40,10 +37,7 @@ export function Toast({ message, type = 'error', onClose, duration = 5000 }) {
     )
 }
 
-/**
- * SkeletonCard — animated placeholder while data loads.
- * Props: height (px string, default '80px'), width ('100%')
- */
+
 export function SkeletonCard({ height = '80px', width = '100%', radius = '16px' }) {
     return (
         <div
@@ -55,9 +49,7 @@ export function SkeletonCard({ height = '80px', width = '100%', radius = '16px' 
     )
 }
 
-/**
- * SkeletonHeroGrid — 6 placeholder KPI cards
- */
+
 export function SkeletonHeroGrid() {
     return (
         <div className="hero-grid" aria-busy="true" aria-label="Loading summary data">
@@ -68,9 +60,7 @@ export function SkeletonHeroGrid() {
     )
 }
 
-/**
- * SkeletonTable — placeholder rows for a table
- */
+
 export function SkeletonTable({ rows = 5 }) {
     return (
         <div className="skeleton-table" aria-busy="true" aria-label="Loading table data">
@@ -82,9 +72,7 @@ export function SkeletonTable({ rows = 5 }) {
     )
 }
 
-/**
- * SkeletonCards — placeholder campaign/insight cards
- */
+
 export function SkeletonCards({ count = 4 }) {
     return (
         <div className="campaign-cards-grid" aria-busy="true" aria-label="Loading cards">

@@ -10,33 +10,33 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+
 app.use(cors({
-    origin: 'http://localhost:5173', // Vite default
+    origin: 'http://localhost:5173', 
     credentials: true
 }));
 app.use(express.json());
 
-// Session config
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'marketing-os-secret-key',
     resave: false,
     saveUninitialized: false,
     cookie: {
-        secure: false, // set to true in production with HTTPS
+        secure: false, 
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+        maxAge: 24 * 60 * 60 * 1000 
     }
 }));
 
-// Mock User for simple auth (In production, this would be in the DB)
+
 const MOCK_USER = {
     email: 'admin@marketingos.com',
     password: bcrypt.hashSync('admin123', 10),
     name: 'Arnav Kumar'
 };
 
-// Auth Routes
+
 app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
     if (email === MOCK_USER.email && bcrypt.compareSync(password, MOCK_USER.password)) {
@@ -58,16 +58,16 @@ app.post('/api/auth/logout', (req, res) => {
     res.json({ success: true });
 });
 
-// Main API Routes
+
 app.use('/api', apiRoutes);
 
-// Fallback for production (serving build)
+
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
 });
 
-// Start Server
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

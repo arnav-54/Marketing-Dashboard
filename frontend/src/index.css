@@ -20,7 +20,7 @@
   --radius-lg: 24px;
 }
 
-/* ── Base Reset ── */
+
 * {
   box-sizing: border-box;
 }
@@ -60,7 +60,7 @@ h6 {
   margin: 0;
 }
 
-/* ── Layout ── */
+
 .app-container {
   display: flex;
   height: 100vh;
@@ -91,7 +91,7 @@ h6 {
   position: relative;
 }
 
-/* ── Global Section Styles ── */
+
 .dashboard-section {
   padding: 3.5rem 0;
   border-bottom: 1px solid var(--border-light);
@@ -130,7 +130,7 @@ h6 {
   margin-top: 0.5rem;
 }
 
-/* ── Sidebar ── */
+
 .logo-area {
   display: flex;
   align-items: center;
@@ -232,7 +232,7 @@ h6 {
   font-weight: 500;
 }
 
-/* ── Top Bar & Filters ── */
+
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -319,7 +319,7 @@ h6 {
   cursor: pointer;
 }
 
-/* ── KPI Grid ── */
+
 .hero-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -370,7 +370,7 @@ h6 {
   color: var(--text-primary);
 }
 
-/* ── Overview Layout ── */
+
 .overview-container {
   display: grid;
   grid-template-columns: 1fr 380px;
@@ -390,7 +390,7 @@ h6 {
   flex-direction: column;
 }
 
-/* ── Data Tables ── */
+
 .table-card {
   background: white;
   padding: 1.5rem;
@@ -448,7 +448,7 @@ h6 {
   color: var(--primary-purple);
 }
 
-/* ── Budget Simulator ── */
+
 .simulator-container {
   display: grid;
   grid-template-columns: 1fr 400px;
@@ -535,7 +535,7 @@ h6 {
   border-radius: 14px;
 }
 
-/* ── Campaign Cards ── */
+
 .campaign-groups {
   display: flex;
   flex-direction: column;
@@ -584,7 +584,7 @@ h6 {
   color: var(--text-primary);
 }
 
-/* ── Insights ── */
+
 .insights-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
@@ -613,7 +613,7 @@ h6 {
   color: var(--text-primary);
 }
 
-/* ── Settings ── */
+
 .settings-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -641,7 +641,7 @@ h6 {
   margin-bottom: 0.75rem;
 }
 
-/* ── Utility ── */
+
 .empty-state {
   padding: 3rem;
   background: #f9fafb;
@@ -678,7 +678,7 @@ h6 {
   color: #991b1b;
 }
 
-/* ── Responsive ── */
+
 @media (max-width: 1300px) {
 
   .overview-container,
@@ -735,7 +735,7 @@ h6 {
   }
 }
 
-/* ── Login ── */
+
 .login-page {
   position: fixed;
   inset: 0;

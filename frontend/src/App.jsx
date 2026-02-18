@@ -33,35 +33,35 @@ const SECTION_IDS = [
 ]
 const CHANNEL_NAMES = ['Email', 'SEO', 'LinkedIn', 'Google Ads', 'Influencer', 'Meta Ads', 'Instagram']
 
-// ─── Safe fetch ───────────────────────────────────────────────────────────────
+
 async function safeFetch(url) {
   const res = await fetch(url)
   if (!res.ok) throw new Error(`API error ${res.status}: ${url}`)
   return res.json()
 }
 
-// ─── App ─────────────────────────────────────────────────────────────────────
+
 export default function App() {
   const { user, loading: authLoading, logout } = useAuth()
 
-  // ── Data ────────────────────────────────────────────────────────────────────
+  
   const [summary, setSummary] = useState(null)
   const [channels, setChannels] = useState([])
   const [monthly, setMonthly] = useState([])
   const [campaigns, setCampaigns] = useState([])
   const [insights, setInsights] = useState([])
 
-  // ── Loading flags ────────────────────────────────────────────────────────────
+  
   const [loadingInit, setLoadingInit] = useState(true)
   const [loadingChannels, setLoadingChannels] = useState(false)
   const [loadingCampaigns, setLoadingCampaigns] = useState(false)
 
-  // ── Toast ────────────────────────────────────────────────────────────────────
+  
   const [toast, setToast] = useState({ message: '', type: 'error' })
   const showError = (msg) => setToast({ message: msg, type: 'error' })
   const showSuccess = (msg) => setToast({ message: msg, type: 'success' })
 
-  // ── Filters — use refs ───────────────────────────────────────────────────────
+  
   const [channelFilter, setChannelFilter] = useState('')
   const [minRoas, setMinRoas] = useState('')
   const [maxRoas, setMaxRoas] = useState('')
@@ -80,13 +80,13 @@ export default function App() {
   const setChannelSortSync = (v) => { channelSortRef.current = v; setChannelSort(v) }
   const setChannelOrderSync = (v) => { channelOrderRef.current = v; setChannelOrder(v) }
 
-  // ── Mobile sidebar ───────────────────────────────────────────────────────────
+  
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // ── Scroll spy ───────────────────────────────────────────────────────────────
+  
   const { activeId, scrollToSection } = useScrollSpy(SECTION_IDS, 'main-scroll-area', 100)
 
-  // ── Fetch helpers ────────────────────────────────────────────────────────────
+  
 
   const fetchChannels = useCallback(async (sort, order) => {
     const s = sort !== undefined ? sort : channelSortRef.current
@@ -122,9 +122,9 @@ export default function App() {
     }
   }, [])
 
-  // ── Initial load ──────────────────────────────────────────────────────────────
+  
   useEffect(() => {
-    if (!user) return; // Don't fetch if not logged in
+    if (!user) return; 
 
     const init = async () => {
       setLoadingInit(true)
@@ -148,7 +148,7 @@ export default function App() {
     init()
   }, [user])
 
-  // ── Handlers ──────────────────────────────────────────────────────────────────
+  
   const handleSortChange = (col, ord) => {
     const newSort = col !== undefined ? col : channelSortRef.current
     const newOrder = ord !== undefined ? ord : (channelSortRef.current === col && channelOrderRef.current === 'desc' ? 'asc' : 'desc')
@@ -179,11 +179,11 @@ export default function App() {
     setSidebarOpen(false)
   }
 
-  // ── Auth Logic ──
+  
   if (authLoading) return <div className="loading-screen">Authenticating...</div>
   if (!user) return <Login />
 
-  // ── Extra Viz Data ──
+  
   const pieData = {
     labels: channels.map(c => c.name),
     datasets: [{
@@ -193,7 +193,7 @@ export default function App() {
     }]
   }
 
-  // ── Full-page loading ──
+  
   if (loadingInit) {
     return (
       <div className="loading-screen" role="status" aria-label="Loading dashboard">
@@ -234,7 +234,7 @@ export default function App() {
         />
 
         <div className="dashboard-grid">
-          {/* 1. Overview */}
+          {}
           <section id="section-overview" className="dashboard-section">
             <div className="section-heading">
               <h2 className="section-title">Performance Summary</h2>
@@ -251,7 +251,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* 2. Channels */}
+          {}
           <section id="section-channels" className="dashboard-section">
             <div className="section-heading">
               <h2 className="section-title">Channel Performance</h2>
@@ -260,13 +260,13 @@ export default function App() {
             {!loadingChannels ? <ChannelTable channels={channels} sortBy={channelSort} order={channelOrder} onSort={handleSortChange} /> : <SkeletonTable rows={7} />}
           </section>
 
-          {/* 3. Monthly */}
+          {}
           {monthly.length > 0 && <MonthlyTrend monthly={monthly} />}
 
-          {/* 4. Simulator (BONUS) */}
+          {}
           <BudgetSimulator channels={channels} />
 
-          {/* 5. Campaigns */}
+          {}
           <section id="section-campaigns" className="dashboard-section">
             <div className="section-heading">
               <h2 className="section-title">Campaign Performance</h2>
@@ -277,7 +277,7 @@ export default function App() {
 
           <InsightsPanel insights={insights} />
 
-          {/* 6. Settings */}
+          {}
           <section id="section-settings" className="dashboard-section">
             <div className="section-heading"><h2 className="section-title">Settings</h2></div>
             <div className="settings-grid">

@@ -33,11 +33,11 @@ function MoMBadge({ val }) {
 }
 
 export default function MonthlyTrend({ monthly }) {
-    // Default to the last (most recent) month
+    
     const lastMonth = monthly[monthly.length - 1]?.month || ''
     const [selected, setSelected] = useState(lastMonth)
 
-    // If the monthly data changes (e.g. re-fetch), reset to the last month
+    
     useEffect(() => {
         const last = monthly[monthly.length - 1]?.month || ''
         setSelected(last)
@@ -52,11 +52,11 @@ export default function MonthlyTrend({ monthly }) {
     const conversions = current?.total_conversions ?? current?.conversions ?? 0
     const roas = current?.roas ?? 0
 
-    // Compute MoM from prev row if backend doesn't provide it
+    
     const momSpend = current?.mom_spend_growth ?? (prev ? ((spend - (prev.total_spend ?? prev.spend ?? 0)) / (prev.total_spend ?? prev.spend ?? 1) * 100) : 0)
     const momRevenue = current?.mom_revenue_growth ?? (prev ? ((revenue - (prev.total_revenue ?? prev.revenue ?? 0)) / (prev.total_revenue ?? prev.revenue ?? 1) * 100) : 0)
 
-    // Chart data — built from the full monthly array
+    
     const barData = {
         labels: monthly.map((m) => fmtMonth(m.month)),
         datasets: [
@@ -116,7 +116,7 @@ export default function MonthlyTrend({ monthly }) {
             },
         },
         onClick: (_, elements) => {
-            // Clicking a bar also selects that month
+            
             if (elements.length > 0) {
                 const idx = elements[0].index
                 setSelected(monthly[idx]?.month || selected)
@@ -131,7 +131,7 @@ export default function MonthlyTrend({ monthly }) {
                 <p className="section-desc">Month-over-month performance breakdown — click a bar or tab to select</p>
             </div>
 
-            {/* Month selector tabs */}
+            {}
             <div className="month-selector-row">
                 <span className="filter-label" id="month-selector-label">Select Month</span>
                 <div className="month-tabs" role="tablist" aria-labelledby="month-selector-label">
@@ -150,7 +150,7 @@ export default function MonthlyTrend({ monthly }) {
                 </div>
             </div>
 
-            {/* Selected month metrics */}
+            {}
             {current && (
                 <div
                     className="monthly-metrics"
@@ -185,7 +185,7 @@ export default function MonthlyTrend({ monthly }) {
                 </div>
             )}
 
-            {/* Bar chart — key forces Chart.js to re-render when data changes */}
+            {}
             <div
                 className="chart-container"
                 role="img"

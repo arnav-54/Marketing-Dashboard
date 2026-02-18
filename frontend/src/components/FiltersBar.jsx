@@ -23,7 +23,7 @@ export default function FiltersBar({
                     <span className="filter-bar-label">Filters</span>
                 </div>
 
-                {/* Channel filter */}
+                {}
                 <div className="filter-group">
                     <label className="filter-label">Channel</label>
                     <select
@@ -38,7 +38,7 @@ export default function FiltersBar({
                     </select>
                 </div>
 
-                {/* ROAS range */}
+                {}
                 <div className="filter-group">
                     <label className="filter-label">ROAS Min</label>
                     <input
@@ -64,7 +64,7 @@ export default function FiltersBar({
                     />
                 </div>
 
-                {/* Sort */}
+                {}
                 <div className="filter-group">
                     <label className="filter-label">Sort Channels By</label>
                     <div className="sort-input-group" style={{ display: 'flex', gap: '0.5rem' }}>

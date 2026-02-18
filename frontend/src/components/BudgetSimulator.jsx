@@ -5,7 +5,7 @@ const INR = (val) =>
     '₹' + Math.round(val).toLocaleString('en-IN')
 
 export default function BudgetSimulator({ channels }) {
-    // We only simulate channels we have data for
+    
     const initialAllocations = useMemo(() => {
         return channels.map(ch => ({
             name: ch.name,
@@ -25,7 +25,7 @@ export default function BudgetSimulator({ channels }) {
 
     const reset = () => setAllocations(initialAllocations)
 
-    // Calculations
+    
     const originalTotalSpend = initialAllocations.reduce((sum, a) => sum + a.originalSpend, 0)
     const newTotalSpend = allocations.reduce((sum, a) => sum + a.spend, 0)
 

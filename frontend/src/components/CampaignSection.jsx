@@ -61,7 +61,7 @@ function CampaignCard({ c }) {
     )
 }
 
-// ─── CampaignSection — no outer <section>, App owns that ─────────────────────
+
 export default function CampaignSection({ campaigns }) {
     if (!campaigns || campaigns.length === 0) {
         return <p className="empty-state">No campaigns match the current filters.</p>
@@ -82,7 +82,7 @@ export default function CampaignSection({ campaigns }) {
     return (
         <div className="campaign-groups">
 
-            {/* Top 5 by ROAS */}
+            {}
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <Trophy size={18} className="cg-icon gold" aria-hidden="true" />
@@ -93,7 +93,7 @@ export default function CampaignSection({ campaigns }) {
                 </div>
             </div>
 
-            {/* Underperforming */}
+            {}
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <AlertTriangle size={18} className="cg-icon red" aria-hidden="true" />
@@ -110,7 +110,7 @@ export default function CampaignSection({ campaigns }) {
                 }
             </div>
 
-            {/* Scaling opportunities */}
+            {}
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <Rocket size={18} className="cg-icon green" aria-hidden="true" />

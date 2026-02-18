@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext'
 
-// Inject skip-to-content link for keyboard/screen-reader users
+
 const skipLink = document.createElement('a')
 skipLink.href = '#main-scroll-area'
 skipLink.className = 'skip-link'
