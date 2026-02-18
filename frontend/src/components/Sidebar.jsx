@@ -20,11 +20,13 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
             role="navigation"
             aria-label="Dashboard navigation"
         >
-            {}
+            { }
             <div className="logo-area">
-                <div className="logo-icon" aria-hidden="true"><Sparkles size={20} /></div>
-                <span className="logo-text">MarketingOS</span>
-                {}
+                <div className="logo-main">
+                    <div className="logo-icon" aria-hidden="true"><Sparkles size={20} /></div>
+                    <span className="logo-text">MarketingOS</span>
+                </div>
+                { }
                 <button
                     className="sidebar-close-btn"
                     onClick={onClose}
@@ -34,7 +36,7 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </button>
             </div>
 
-            {}
+            { }
             <nav aria-label="Main sections">
                 <ul className="nav-section" role="list">
                     {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
@@ -65,7 +67,7 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </ul>
             </nav>
 
-            {}
+            { }
             <div className="sidebar-footer">
                 <div className="sidebar-user" aria-label="Logged in as Arnav Kumar, Admin">
                     <div className="sidebar-avatar" aria-hidden="true">AK</div>
