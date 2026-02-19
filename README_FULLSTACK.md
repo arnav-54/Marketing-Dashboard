@@ -1,4 +1,4 @@
-# 🚀 MarketingOS — Full-Stack Dashboard Documentation
+# MarketingOS — Full-Stack Dashboard Documentation
 
 ## Overview
 
@@ -89,28 +89,24 @@ marketing-analytics-dashboard/
 ### Step-by-Step Setup
 
 ```bash
-# 1. Clone the repository
+
 git clone https://github.com/arnav-54/Marketing-Dashboard.git
 cd Marketing-Dashboard
 
-# 2. Install backend dependencies
+
 npm install
 
-# 3. Install frontend dependencies
+
 cd frontend
 npm install
 cd ..
 
-# 4. Set up Python environment (for analytics script)
 python3 -m venv venv
 source venv/bin/activate
 pip install pandas numpy
 
-# 5. Run the analytics script to generate summary data
 python spend_analysis.py
 
-# 6. Configure environment variables
-# Create a .env file in the project root with the following:
 cat > .env << EOF
 DB_HOST=localhost
 DB_USER=root
@@ -128,19 +124,14 @@ EOF
 ### Option A: Local MySQL
 
 ```bash
-# 1. Log into MySQL
 mysql -u root -p
 
-# 2. Run the schema file to create all tables
 source database/schema.sql;
 
-# 3. Exit MySQL
 exit;
 
-# 4. Set up demo user (creates users table + admin account)
 node backend/scripts/setupDb.js
 
-# 5. Import analytics data into MySQL tables
 npm run import-data
 ```
 
@@ -180,28 +171,22 @@ npm run import-data
 ### Backend Server
 
 ```bash
-# From project root
 npm start
-# Server starts on http://localhost:3000
 ```
 
 ### Frontend Dev Server
 
 ```bash
-# From frontend/ directory
 cd frontend
 npm run dev
-# Frontend starts on http://localhost:5173
 ```
 
 ### Both Together (Development)
 
 Open two terminals:
 ```bash
-# Terminal 1 — Backend
 npm start
 
-# Terminal 2 — Frontend
 cd frontend && npm run dev
 ```
 

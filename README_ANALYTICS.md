@@ -16,18 +16,14 @@
 ### Steps
 
 ```bash
-# 1. Navigate to the project root
 cd marketing-analytics-dashboard
 
-# 2. Create and activate a virtual environment
-python3 -m venv venv
-source venv/bin/activate        # macOS/Linux
-# venv\Scripts\activate          # Windows
 
-# 3. Install dependencies
+python3 -m venv venv
+source venv/bin/activate        
+       
 pip install pandas numpy
 
-# 4. Run the script
 python spend_analysis.py
 ```
 
