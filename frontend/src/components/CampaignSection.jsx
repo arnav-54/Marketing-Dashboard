@@ -71,18 +71,18 @@ export default function CampaignSection({ campaigns }) {
 
     const underperforming = campaigns.filter((c) => {
         const spend = parseFloat(c.total_spend ?? c.spend ?? 0)
-        return spend >= 50000 && parseFloat(c.roas) < 2.0
+        return spend >= 1000000 && parseFloat(c.roas) < 3.0
     })
 
     const scaling = campaigns.filter((c) => {
         const spend = parseFloat(c.total_spend ?? c.spend ?? 0)
-        return parseFloat(c.roas) >= 5.0 && spend < 20000
+        return parseFloat(c.roas) >= 6.0 && spend < 1000000
     })
 
     return (
         <div className="campaign-groups">
 
-            {}
+            { }
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <Trophy size={18} className="cg-icon gold" aria-hidden="true" />
@@ -93,12 +93,12 @@ export default function CampaignSection({ campaigns }) {
                 </div>
             </div>
 
-            {}
+            { }
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <AlertTriangle size={18} className="cg-icon red" aria-hidden="true" />
                     <h3 className="cg-title">Underperforming Campaigns</h3>
-                    <span className="cg-badge red">Spend ≥ ₹50k &amp; ROAS &lt; 2.0</span>
+                    <span className="cg-badge red">Spend ≥ ₹10L &amp; ROAS &lt; 3.0</span>
                 </div>
                 {underperforming.length === 0
                     ? <p className="empty-state">No underperforming campaigns with current filters.</p>
@@ -110,12 +110,12 @@ export default function CampaignSection({ campaigns }) {
                 }
             </div>
 
-            {}
+            { }
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <Rocket size={18} className="cg-icon green" aria-hidden="true" />
                     <h3 className="cg-title">Scaling Opportunities</h3>
-                    <span className="cg-badge green">ROAS ≥ 5.0 &amp; Spend &lt; ₹20k</span>
+                    <span className="cg-badge green">ROAS ≥ 6.0 &amp; Spend &lt; ₹10L</span>
                 </div>
                 {scaling.length === 0
                     ? <p className="empty-state">No scaling opportunities with current filters.</p>

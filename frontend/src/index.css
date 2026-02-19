@@ -405,9 +405,8 @@ h6 {
   border-radius: 16px;
   border: 1px solid var(--border-light);
   margin-bottom: 2.5rem;
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: relative;
+  z-index: 10;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
@@ -1104,30 +1103,79 @@ h6 {
 
 .insights-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 2rem;
 }
 
 .insight-card {
   display: flex;
-  gap: 1.75rem;
+  gap: 1.5rem;
   background: white;
-  padding: 2rem;
+  padding: 1.75rem;
   border-radius: 24px;
-  box-shadow: var(--shadow-card);
-  border-left: 8px solid transparent;
-  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .insight-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.insight-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
 .insight-body {
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  line-height: 1.6;
   font-weight: 500;
   color: var(--text-primary);
+}
+
+.insight-purple {
+  border-top: 5px solid #8b5cf6;
+}
+
+.insight-green {
+  border-top: 5px solid #10b981;
+}
+
+.insight-orange {
+  border-top: 5px solid #f59e0b;
+}
+
+.insight-blue {
+  border-top: 5px solid #3b82f6;
+}
+
+.insight-icon-purple {
+  background: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.insight-icon-green {
+  background: #f0fdf4;
+  color: #10b981;
+}
+
+.insight-icon-orange {
+  background: #fffbeb;
+  color: #f59e0b;
+}
+
+.insight-icon-blue {
+  background: #eff6ff;
+  color: #3b82f6;
 }
 
 
@@ -1406,8 +1454,23 @@ h6 {
 }
 
 .login-footer p {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
+}
+
+.toggle-auth-btn {
+  background: none;
+  border: none;
+  color: var(--primary-purple);
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.toggle-auth-btn:hover {
+  text-decoration: underline;
 }
 
 .login-error {
@@ -1418,4 +1481,113 @@ h6 {
   font-size: 0.85rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
+}
+
+.tutorial-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease;
+}
+
+.tutorial-card {
+  width: 420px;
+  background: white;
+  padding: 3.5rem;
+  border-radius: 32px;
+  box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.tutorial-skip {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  transition: 0.2s;
+}
+
+.tutorial-skip:hover {
+  opacity: 1;
+}
+
+.tutorial-icon-box {
+  width: 64px;
+  height: 64px;
+  background: #f5f3ff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 24px;
+}
+
+.tutorial-card h3 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.tutorial-card p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.tutorial-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tutorial-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tutorial-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  transition: 0.3s;
+}
+
+.tutorial-dots .dot.active {
+  width: 24px;
+  background: var(--primary-purple);
+  border-radius: 4px;
+}
+
+.tutorial-next-btn {
+  padding: 0.75rem 1.75rem;
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
 }
