@@ -18,6 +18,7 @@ import InsightsPanel from './components/InsightsPanel'
 import FiltersBar from './components/FiltersBar'
 import BudgetSimulator from './components/BudgetSimulator'
 import Login from './components/Login'
+import Tutorial from './components/Tutorial'
 import { useAuth } from './context/AuthContext'
 import { Toast, SkeletonHeroGrid, SkeletonTable, SkeletonCards } from './components/Feedback'
 
@@ -34,9 +35,12 @@ const SECTION_IDS = [
 const CHANNEL_NAMES = ['Email', 'SEO', 'LinkedIn', 'Google Ads', 'Influencer', 'Meta Ads', 'Instagram']
 
 
+import API_BASE_URL from './config'
+
 async function safeFetch(url) {
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`API error ${res.status}: ${url}`)
+  const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
+  const res = await fetch(fullUrl, { credentials: 'include' })
+  if (!res.ok) throw new Error(`API error ${res.status}: ${fullUrl}`)
   return res.json()
 }
 
@@ -44,24 +48,48 @@ async function safeFetch(url) {
 export default function App() {
   const { user, loading: authLoading, logout } = useAuth()
 
-  
+
   const [summary, setSummary] = useState(null)
   const [channels, setChannels] = useState([])
   const [monthly, setMonthly] = useState([])
   const [campaigns, setCampaigns] = useState([])
   const [insights, setInsights] = useState([])
 
-  
+
   const [loadingInit, setLoadingInit] = useState(true)
   const [loadingChannels, setLoadingChannels] = useState(false)
   const [loadingCampaigns, setLoadingCampaigns] = useState(false)
 
-  
+
   const [toast, setToast] = useState({ message: '', type: 'error' })
+  const [showTutorial, setShowTutorial] = useState(false)
+
   const showError = (msg) => setToast({ message: msg, type: 'error' })
   const showSuccess = (msg) => setToast({ message: msg, type: 'success' })
 
-  
+  const fetchTutorialStatus = useCallback(async () => {
+    try {
+      const data = await safeFetch('/api/tutorial/status')
+      if (!data.tutorialSeen) setShowTutorial(true)
+    } catch (err) {
+      console.error('Could not fetch tutorial status', err)
+    }
+  }, [])
+
+  const handleTutorialComplete = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/api/tutorial/complete`, {
+        method: 'POST',
+        credentials: 'include'
+      })
+      setShowTutorial(false)
+    } catch (err) {
+      console.error('Could not complete tutorial', err)
+      setShowTutorial(false)
+    }
+  }
+
+
   const [channelFilter, setChannelFilter] = useState('')
   const [minRoas, setMinRoas] = useState('')
   const [maxRoas, setMaxRoas] = useState('')
@@ -80,13 +108,13 @@ export default function App() {
   const setChannelSortSync = (v) => { channelSortRef.current = v; setChannelSort(v) }
   const setChannelOrderSync = (v) => { channelOrderRef.current = v; setChannelOrder(v) }
 
-  
+
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  
+
   const { activeId, scrollToSection } = useScrollSpy(SECTION_IDS, 'main-scroll-area', 100)
 
-  
+
 
   const fetchChannels = useCallback(async (sort, order) => {
     const s = sort !== undefined ? sort : channelSortRef.current
@@ -122,9 +150,9 @@ export default function App() {
     }
   }, [])
 
-  
+
   useEffect(() => {
-    if (!user) return; 
+    if (!user) return;
 
     const init = async () => {
       setLoadingInit(true)
@@ -141,6 +169,7 @@ export default function App() {
         if (mo.status === 'fulfilled') setMonthly(mo.value)
         if (camp.status === 'fulfilled') setCampaigns(camp.value)
         if (ins.status === 'fulfilled') setInsights(ins.value)
+        fetchTutorialStatus()
       } finally {
         setLoadingInit(false)
       }
@@ -148,7 +177,7 @@ export default function App() {
     init()
   }, [user])
 
-  
+
   const handleSortChange = (col, ord) => {
     const newSort = col !== undefined ? col : channelSortRef.current
     const newOrder = ord !== undefined ? ord : (channelSortRef.current === col && channelOrderRef.current === 'desc' ? 'asc' : 'desc')
@@ -179,11 +208,11 @@ export default function App() {
     setSidebarOpen(false)
   }
 
-  
+
   if (authLoading) return <div className="loading-screen">Authenticating...</div>
   if (!user) return <Login />
 
-  
+
   const pieData = {
     labels: channels.map(c => c.name),
     datasets: [{
@@ -193,7 +222,7 @@ export default function App() {
     }]
   }
 
-  
+
   if (loadingInit) {
     return (
       <div className="loading-screen" role="status" aria-label="Loading dashboard">
@@ -203,8 +232,17 @@ export default function App() {
     )
   }
 
+  // Get initials from user name for header avatar
+  const getUserInitials = (name) => {
+    if (!name) return '??'
+    const parts = name.split(' ')
+    if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase()
+    return name.slice(0, 2).toUpperCase()
+  }
+
   return (
     <div className="app-container">
+      {showTutorial && <Tutorial onComplete={handleTutorialComplete} />}
       {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
       <Sidebar activeId={activeId} onNavClick={handleNavClick} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -219,7 +257,7 @@ export default function App() {
           </div>
           <div className="top-actions">
             <button className="icon-btn" onClick={logout} title="Log Out"><LogOut size={20} /></button>
-            <div className="avatar-badge">AK</div>
+            <div className="avatar-badge">{getUserInitials(user.name)}</div>
           </div>
         </header>
 
@@ -234,7 +272,7 @@ export default function App() {
         />
 
         <div className="dashboard-grid">
-          {}
+          { }
           <section id="section-overview" className="dashboard-section">
             <div className="section-heading">
               <h2 className="section-title">Performance Summary</h2>
@@ -251,7 +289,7 @@ export default function App() {
             </div>
           </section>
 
-          {}
+          { }
           <section id="section-channels" className="dashboard-section">
             <div className="section-heading">
               <h2 className="section-title">Channel Performance</h2>
@@ -260,13 +298,13 @@ export default function App() {
             {!loadingChannels ? <ChannelTable channels={channels} sortBy={channelSort} order={channelOrder} onSort={handleSortChange} /> : <SkeletonTable rows={7} />}
           </section>
 
-          {}
+          { }
           {monthly.length > 0 && <MonthlyTrend monthly={monthly} />}
 
-          {}
+          { }
           <BudgetSimulator channels={channels} />
 
-          {}
+          { }
           <section id="section-campaigns" className="dashboard-section">
             <div className="section-heading">
               <h2 className="section-title">Campaign Performance</h2>
@@ -277,7 +315,7 @@ export default function App() {
 
           <InsightsPanel insights={insights} />
 
-          {}
+          { }
           <section id="section-settings" className="dashboard-section">
             <div className="section-heading"><h2 className="section-title">Settings</h2></div>
             <div className="settings-grid">
