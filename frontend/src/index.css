@@ -335,10 +335,37 @@ h6 {
   margin-top: auto;
 }
 
+.sidebar-user-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .sidebar-user {
   display: flex;
   align-items: center;
   gap: 0.85rem;
+}
+
+.sidebar-logout-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.sidebar-logout-btn:hover {
+  background: #fef2f2;
+  color: var(--accent-red);
+  border-color: #fee2e2;
+  transform: scale(1.05);
 }
 
 .sidebar-avatar {
@@ -380,6 +407,26 @@ h6 {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar-badge {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-gradient);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
 }
 
 .hamburger-btn {

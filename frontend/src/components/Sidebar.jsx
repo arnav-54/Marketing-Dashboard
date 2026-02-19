@@ -1,6 +1,6 @@
 import {
     LayoutGrid, Globe, CalendarDays, TrendingUp,
-    Lightbulb, Settings, Sparkles, ChevronRight, X,
+    Lightbulb, Settings, Sparkles, ChevronRight, X, LogOut
 } from 'lucide-react'
 
 import { useAuth } from '../context/AuthContext'
@@ -14,7 +14,7 @@ export const NAV_ITEMS = [
 ]
 
 export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
 
     // Get initials from user name
     const getInitials = (name) => {
@@ -81,14 +81,19 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </ul>
             </nav>
 
-            {/* User Profile */}
+            {/* User Profile & Logout */}
             <div className="sidebar-footer">
-                <div className="sidebar-user" aria-label={`Logged in as ${userName}`}>
-                    <div className="sidebar-avatar" aria-hidden="true">{getInitials(userName)}</div>
-                    <div className="sidebar-user-info">
-                        <span className="sidebar-user-name">{userName}</span>
-                        <span className="sidebar-user-role">{userRole}</span>
+                <div className="sidebar-user-container">
+                    <div className="sidebar-user" aria-label={`Logged in as ${userName}`}>
+                        <div className="sidebar-avatar" aria-hidden="true">{getInitials(userName)}</div>
+                        <div className="sidebar-user-info">
+                            <span className="sidebar-user-name">{userName}</span>
+                            <span className="sidebar-user-role">{userRole}</span>
+                        </div>
                     </div>
+                    <button className="sidebar-logout-btn" onClick={logout} title="Log Out" aria-label="Log Out">
+                        <LogOut size={18} />
+                    </button>
                 </div>
             </div>
         </aside>

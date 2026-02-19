@@ -256,7 +256,6 @@ export default function App() {
             </div>
           </div>
           <div className="top-actions">
-            <button className="icon-btn" onClick={logout} title="Log Out"><LogOut size={20} /></button>
             <div className="avatar-badge">{getUserInitials(user.name)}</div>
           </div>
         </header>
