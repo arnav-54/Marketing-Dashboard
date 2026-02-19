@@ -11,7 +11,6 @@ export const NAV_ITEMS = [
     { id: 'section-monthly', label: 'Monthly', icon: CalendarDays },
     { id: 'section-campaigns', label: 'Campaigns', icon: TrendingUp },
     { id: 'section-insights', label: 'Insights', icon: Lightbulb },
-    { id: 'section-settings', label: 'Settings', icon: Settings },
 ]
 
 export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {

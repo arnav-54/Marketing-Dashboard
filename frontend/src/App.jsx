@@ -30,7 +30,7 @@ ChartJS.register(
 
 const SECTION_IDS = [
   'section-overview', 'section-channels', 'section-monthly',
-  'section-simulator', 'section-campaigns', 'section-insights', 'section-settings',
+  'section-simulator', 'section-campaigns', 'section-insights',
 ]
 const CHANNEL_NAMES = ['Email', 'SEO', 'LinkedIn', 'Google Ads', 'Influencer', 'Meta Ads', 'Instagram']
 
@@ -315,15 +315,6 @@ export default function App() {
 
           <InsightsPanel insights={insights} />
 
-          { }
-          <section id="section-settings" className="dashboard-section">
-            <div className="section-heading"><h2 className="section-title">Settings</h2></div>
-            <div className="settings-grid">
-              {[{ t: 'Profile', d: 'Manage account' }, { t: 'API', d: 'Connect integrations' }].map(s => (
-                <div key={s.t} className="settings-card"><h4>{s.t}</h4><p>{s.d}</p></div>
-              ))}
-            </div>
-          </section>
         </div>
       </main>
 
