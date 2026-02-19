@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { Lock, Mail, ShieldCheck, Loader2 } from 'lucide-react'
+import { Lock, Mail, ShieldCheck, Loader2, User } from 'lucide-react'
 
 export default function Login() {
-    const { login } = useAuth()
+    const { login, register } = useAuth()
+    const [isRegistering, setIsRegistering] = useState(false)
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -15,9 +17,12 @@ export default function Login() {
         setError('')
 
         try {
-            const res = await login(email, password)
+            const res = isRegistering
+                ? await register(name, email, password)
+                : await login(email, password)
+
             if (!res.success) {
-                setError(res.message || 'Login failed')
+                setError(res.message || (isRegistering ? 'Registration failed' : 'Login failed'))
             }
         } catch (err) {
             setError('Connection error. Please try again.')
@@ -34,11 +39,27 @@ export default function Login() {
                         <ShieldCheck size={32} color="var(--primary-purple)" />
                     </div>
                     <h1>MarketingOS</h1>
-                    <p>Enter your credentials to access the dashboard</p>
+                    <p>{isRegistering ? 'Create your account to get started' : 'Enter your credentials to access the dashboard'}</p>
                 </div>
 
                 <form className="login-form" onSubmit={handleSubmit}>
                     {error && <div className="login-error">{error}</div>}
+
+                    {isRegistering && (
+                        <div className="login-input-group">
+                            <label>Full Name</label>
+                            <div className="login-input-wrapper">
+                                <User size={18} className="input-icon" />
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Your Name"
+                                    required={isRegistering}
+                                />
+                            </div>
+                        </div>
+                    )}
 
                     <div className="login-input-group">
                         <label>Email Address</label>
@@ -48,7 +69,7 @@ export default function Login() {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                placeholder=""
+                                placeholder="name@company.com"
                                 required
                             />
                         </div>
@@ -62,18 +83,30 @@ export default function Login() {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder=""
+                                placeholder="••••••••"
                                 required
                             />
                         </div>
                     </div>
 
                     <button type="submit" className="login-btn" disabled={loading}>
-                        {loading ? <Loader2 className="spinner" size={20} /> : 'Sign In'}
+                        {loading ? <Loader2 className="spinner" size={20} /> : (isRegistering ? 'Create Account' : 'Sign In')}
                     </button>
 
                     <div className="login-footer">
-                        <p>Demo Credentials: <b>admin@marketingos.com</b> / <b>admin123</b></p>
+                        <p>
+                            {isRegistering ? 'Already have an account?' : "Don't have an account?"}{' '}
+                            <button
+                                type="button"
+                                className="toggle-auth-btn"
+                                onClick={() => {
+                                    setIsRegistering(!isRegistering)
+                                    setError('')
+                                }}
+                            >
+                                {isRegistering ? 'Sign In' : 'Sign Up'}
+                            </button>
+                        </p>
                     </div>
                 </form>
             </div>

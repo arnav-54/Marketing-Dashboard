@@ -3,6 +3,8 @@ import {
     Lightbulb, Settings, Sparkles, ChevronRight, X,
 } from 'lucide-react'
 
+import { useAuth } from '../context/AuthContext'
+
 export const NAV_ITEMS = [
     { id: 'section-overview', label: 'Overview', icon: LayoutGrid },
     { id: 'section-channels', label: 'Channels', icon: Globe },
@@ -13,6 +15,19 @@ export const NAV_ITEMS = [
 ]
 
 export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
+    const { user } = useAuth()
+
+    // Get initials from user name
+    const getInitials = (name) => {
+        if (!name) return '??'
+        const parts = name.split(' ')
+        if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase()
+        return name.slice(0, 2).toUpperCase()
+    }
+
+    const userName = user?.name || 'Guest User'
+    const userRole = user?.email === 'admin@marketingos.com' ? 'Admin' : 'Member'
+
     return (
         <aside
             id="sidebar-nav"
@@ -20,13 +35,13 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
             role="navigation"
             aria-label="Dashboard navigation"
         >
-            { }
+            {/* Logo */}
             <div className="logo-area">
                 <div className="logo-main">
                     <div className="logo-icon" aria-hidden="true"><Sparkles size={20} /></div>
                     <span className="logo-text">MarketingOS</span>
                 </div>
-                { }
+                {/* Mobile Close Button */}
                 <button
                     className="sidebar-close-btn"
                     onClick={onClose}
@@ -36,7 +51,7 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </button>
             </div>
 
-            { }
+            {/* Navigation */}
             <nav aria-label="Main sections">
                 <ul className="nav-section" role="list">
                     {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
@@ -67,13 +82,13 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </ul>
             </nav>
 
-            { }
+            {/* User Profile */}
             <div className="sidebar-footer">
-                <div className="sidebar-user" aria-label="Logged in as Arnav Kumar, Admin">
-                    <div className="sidebar-avatar" aria-hidden="true">AK</div>
+                <div className="sidebar-user" aria-label={`Logged in as ${userName}`}>
+                    <div className="sidebar-avatar" aria-hidden="true">{getInitials(userName)}</div>
                     <div className="sidebar-user-info">
-                        <span className="sidebar-user-name">Arnav Kumar</span>
-                        <span className="sidebar-user-role">Admin</span>
+                        <span className="sidebar-user-name">{userName}</span>
+                        <span className="sidebar-user-role">{userRole}</span>
                     </div>
                 </div>
             </div>
