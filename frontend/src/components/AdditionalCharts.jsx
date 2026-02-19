@@ -112,7 +112,7 @@ export default function AdditionalCharts({ channels }) {
                 <p className="section-desc">Advanced performance metrics across channels</p>
             </div>
 
-            <div className="charts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
+            <div className="charts-grid">
 
                 <div className="chart-card" style={{ background: 'white', padding: '1.5rem', borderRadius: '20px', boxShadow: 'var(--shadow-card)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>

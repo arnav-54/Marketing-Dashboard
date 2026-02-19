@@ -340,7 +340,7 @@ export default function App() {
         />
 
         {(selectedMonth || channelFilter || minRoas || maxRoas) && (
-          <div className="active-filters" style={{ display: 'flex', gap: '12px', padding: '0 2.5rem 1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div className="active-filters">
             <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Active Filters:</span>
 
             {selectedMonth && (
@@ -379,7 +379,7 @@ export default function App() {
               <h2 className="section-title">Performance Summary</h2>
               <p className="section-desc">Key metrics and budget distribution</p>
             </div>
-            <div className="overview-container" style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '2rem' }}>
+            <div className="overview-container">
               {summary ? <SummaryHero summary={summary} /> : <SkeletonHeroGrid />}
               <div className="pie-card">
                 <h3 className="chart-title"><PieChartIcon size={16} /> Spend Distribution</h3>
@@ -391,7 +391,7 @@ export default function App() {
           </section>
 
           <section id="section-channels" className="dashboard-section">
-            <div className="section-heading" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+            <div className="section-heading">
               <div>
                 <h2 className="section-title">Channel Performance</h2>
                 <p className="section-desc">Real-time efficiency tracking {selectedMonth && `(${selectedMonth})`}</p>
