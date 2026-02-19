@@ -1,4 +1,4 @@
-import { TrendingUp, TrendingDown, DollarSign, Users, Zap, MousePointer } from 'lucide-react'
+import { TrendingUp, TrendingDown } from 'lucide-react'
 
 const INR = (val) =>
     val != null
@@ -19,28 +19,28 @@ export default function SummaryHero({ summary }) {
         {
             label: 'Total Spend',
             value: INR(summary.total_spend),
-            icon: <DollarSign size={20} aria-hidden="true" />,
+            icon: <img src="/total_spend.png" alt="Spend" style={{ width: '24px', height: '24px' }} />,
             accent: 'accent-purple',
             sub: 'All channels combined',
         },
         {
             label: 'Total Revenue',
             value: INR(summary.total_revenue),
-            icon: <TrendingUp size={20} aria-hidden="true" />,
+            icon: <img src="/total_revenue.png" alt="Revenue" style={{ width: '24px', height: '24px' }} />,
             accent: 'accent-green',
             sub: 'Gross revenue generated',
         },
         {
             label: 'Total Conversions',
             value: Number(summary.total_conversions).toLocaleString('en-IN'),
-            icon: <Users size={20} aria-hidden="true" />,
+            icon: <img src="/conversions.png" alt="Conversions" style={{ width: '24px', height: '24px' }} />,
             accent: 'accent-blue',
             sub: 'Across all campaigns',
         },
         {
             label: 'Overall ROAS',
             value: parseFloat(summary.overall_roas).toFixed(2) + 'x',
-            icon: <Zap size={20} aria-hidden="true" />,
+            icon: <img src="/overall_roas.png" alt="ROAS" style={{ width: '24px', height: '24px' }} />,
             accent: roasAccent(summary.overall_roas),
             sub: parseFloat(summary.overall_roas) >= 3
                 ? '✓ Healthy return on ad spend'
@@ -51,14 +51,14 @@ export default function SummaryHero({ summary }) {
         {
             label: 'Overall CPA',
             value: INR(summary.overall_cpa),
-            icon: <TrendingDown size={20} aria-hidden="true" />,
+            icon: <img src="/cpa.png" alt="CPA" style={{ width: '24px', height: '24px' }} />,
             accent: 'accent-orange',
             sub: 'Cost per acquisition',
         },
         {
             label: 'Overall CPC',
             value: INR(summary.overall_cpc),
-            icon: <MousePointer size={20} aria-hidden="true" />,
+            icon: <img src="/cpc.png" alt="CPC" style={{ width: '24px', height: '24px' }} />,
             accent: 'accent-teal',
             sub: 'Cost per click',
         },

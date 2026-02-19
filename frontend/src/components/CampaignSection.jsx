@@ -82,7 +82,6 @@ export default function CampaignSection({ campaigns }) {
     return (
         <div className="campaign-groups">
 
-            { }
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <Trophy size={18} className="cg-icon gold" aria-hidden="true" />
@@ -93,7 +92,6 @@ export default function CampaignSection({ campaigns }) {
                 </div>
             </div>
 
-            { }
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <AlertTriangle size={18} className="cg-icon red" aria-hidden="true" />
@@ -110,7 +108,6 @@ export default function CampaignSection({ campaigns }) {
                 }
             </div>
 
-            { }
             <div className="campaign-group">
                 <div className="campaign-group-header">
                     <Rocket size={18} className="cg-icon green" aria-hidden="true" />

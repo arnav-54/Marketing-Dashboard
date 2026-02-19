@@ -36,13 +36,13 @@ export default function Login() {
             <div className="login-card">
                 <div className="login-header">
                     <div className="login-logo">
-                        <ShieldCheck size={32} color="var(--primary-purple)" />
+                        <img src="/logo.png" alt="MarketingOS Logo" style={{ width: '64px', height: '64px', objectFit: 'contain' }} />
                     </div>
                     <h1>MarketingOS</h1>
                     <p>{isRegistering ? 'Create your account to get started' : 'Enter your credentials to access the dashboard'}</p>
                 </div>
 
-                <form className="login-form" onSubmit={handleSubmit}>
+                <form className="login-form" onSubmit={handleSubmit} autoComplete="off">
                     {error && <div className="login-error">{error}</div>}
 
                     {isRegistering && (
@@ -56,6 +56,7 @@ export default function Login() {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Your Name"
                                     required={isRegistering}
+                                    autoComplete="off"
                                 />
                             </div>
                         </div>
@@ -71,6 +72,7 @@ export default function Login() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="name@company.com"
                                 required
+                                autoComplete="off"
                             />
                         </div>
                     </div>
@@ -85,12 +87,20 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 placeholder="••••••••"
                                 required
+                                autoComplete="new-password"
                             />
                         </div>
                     </div>
 
                     <button type="submit" className="login-btn" disabled={loading}>
-                        {loading ? <Loader2 className="spinner" size={20} /> : (isRegistering ? 'Create Account' : 'Sign In')}
+                        {loading ? (
+                            <>
+                                <Loader2 className="spinner" size={20} />
+                                <span>{isRegistering ? 'Creating Account...' : 'Signing In...'}</span>
+                            </>
+                        ) : (
+                            isRegistering ? 'Create Account' : 'Sign In'
+                        )}
                     </button>
 
                     <div className="login-footer">
@@ -102,6 +112,9 @@ export default function Login() {
                                 onClick={() => {
                                     setIsRegistering(!isRegistering)
                                     setError('')
+                                    setName('')
+                                    setEmail('')
+                                    setPassword('')
                                 }}
                             >
                                 {isRegistering ? 'Sign In' : 'Sign Up'}

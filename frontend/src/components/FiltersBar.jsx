@@ -14,6 +14,7 @@ export default function FiltersBar({
     onOrderChange,
     onApply,
     onReset,
+    isLoading,
 }) {
     return (
         <div className="filters-bar">
@@ -23,13 +24,13 @@ export default function FiltersBar({
                     <span className="filter-bar-label">Filters</span>
                 </div>
 
-                { }
                 <div className="filter-group">
                     <label className="filter-label">Channel</label>
                     <select
                         className="filter-select"
                         value={selectedChannel}
                         onChange={(e) => onChannelChange(e.target.value)}
+                        style={{ width: '150px' }}
                     >
                         <option value="">All Channels</option>
                         {channels.map((ch) => (
@@ -38,7 +39,6 @@ export default function FiltersBar({
                     </select>
                 </div>
 
-                { }
                 <div className="filter-group">
                     <label className="filter-label">ROAS Min</label>
                     <input
@@ -49,8 +49,10 @@ export default function FiltersBar({
                         min={0}
                         step={0.1}
                         onChange={(e) => onMinRoas(e.target.value)}
+                        style={{ width: '100px' }}
                     />
                 </div>
+
                 <div className="filter-group">
                     <label className="filter-label">ROAS Max</label>
                     <input
@@ -61,17 +63,18 @@ export default function FiltersBar({
                         min={0}
                         step={0.1}
                         onChange={(e) => onMaxRoas(e.target.value)}
+                        style={{ width: '100px' }}
                     />
                 </div>
 
-                { }
                 <div className="filter-group">
                     <label className="filter-label">Sort Channels By</label>
-                    <div className="sort-input-group" style={{ display: 'flex', gap: '0.5rem' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem' }}>
                         <select
                             className="filter-select"
                             value={sortBy}
                             onChange={(e) => onSortBy(e.target.value)}
+                            style={{ width: '130px' }}
                         >
                             <option value="roas">ROAS</option>
                             <option value="total_spend">Spend</option>
@@ -93,8 +96,10 @@ export default function FiltersBar({
                                 border: '1px solid var(--border-light)',
                                 borderRadius: '8px',
                                 width: '40px',
+                                height: '42px',
                                 cursor: 'pointer',
-                                color: order === 'desc' ? 'var(--primary-purple)' : 'var(--text-secondary)'
+                                color: order === 'desc' ? 'var(--primary-purple)' : 'var(--text-secondary)',
+                                flexShrink: 0,
                             }}
                         >
                             {order === 'desc' ? <ArrowDown size={18} /> : <ArrowUp size={18} />}
@@ -103,8 +108,15 @@ export default function FiltersBar({
                 </div>
 
                 <div className="filter-actions">
-                    <button className="btn-apply" onClick={onApply}>Apply Filters</button>
-                    <button className="btn-reset" onClick={onReset}>
+                    <button
+                        className="btn-apply"
+                        onClick={onApply}
+                        disabled={isLoading}
+                        style={{ opacity: isLoading ? 0.7 : 1, cursor: isLoading ? 'not-allowed' : 'pointer' }}
+                    >
+                        {isLoading ? 'Applying...' : 'Apply Filters'}
+                    </button>
+                    <button className="btn-reset" onClick={(e) => { e.stopPropagation(); onReset(); }}>
                         <X size={14} /> Reset
                     </button>
                 </div>

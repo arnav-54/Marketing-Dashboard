@@ -10,7 +10,6 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Trust first proxy (required for Render/Heroku)
 app.set('trust proxy', 1);
 
 app.use(cors({

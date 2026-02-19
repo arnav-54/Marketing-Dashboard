@@ -1,65 +1,76 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
-
-export function useScrollSpy(sectionIds, scrollerId, offset = 100) {
+export function useScrollSpy(sectionIds, scrollerId, offset = 120) {
     const [activeId, setActiveId] = useState(sectionIds[0])
     const isProgrammaticRef = useRef(false)
     const timerRef = useRef(null)
 
     useEffect(() => {
         const container = document.getElementById(scrollerId)
-        if (!container) return
+        const scrollTarget = container || window
 
-        const handleScroll = () => {
+        function onScroll() {
             if (isProgrammaticRef.current) return
 
-            
             let current = sectionIds[0]
-            for (const id of sectionIds) {
-                const el = document.getElementById(id)
+
+            for (let i = 0; i < sectionIds.length; i++) {
+                const el = document.getElementById(sectionIds[i])
                 if (!el) continue
-                
-                
-                const containerTop = container.getBoundingClientRect().top
-                const elTop = el.getBoundingClientRect().top - containerTop
-                if (elTop <= offset) {
-                    current = id
+
+                const rect = el.getBoundingClientRect()
+                const refTop = container
+                    ? container.getBoundingClientRect().top
+                    : 0
+                const relativeTop = rect.top - refTop
+
+                if (relativeTop <= offset) {
+                    current = sectionIds[i]
                 }
             }
+
             setActiveId(current)
         }
 
-        container.addEventListener('scroll', handleScroll, { passive: true })
-        
-        handleScroll()
+        scrollTarget.addEventListener('scroll', onScroll, { passive: true })
 
-        return () => container.removeEventListener('scroll', handleScroll)
-    }, [sectionIds, scrollerId, offset])
+        if (container) {
+            window.addEventListener('scroll', onScroll, { passive: true })
+        }
 
-    const scrollToSection = (id) => {
+        onScroll()
+
+        return () => {
+            scrollTarget.removeEventListener('scroll', onScroll)
+            if (container) {
+                window.removeEventListener('scroll', onScroll)
+            }
+        }
+    }, [])
+
+    const scrollToSection = useCallback((id) => {
         const container = document.getElementById(scrollerId)
         const el = document.getElementById(id)
-        if (!container || !el) return
+        if (!el) return
 
-        
         setActiveId(id)
-
-        
         isProgrammaticRef.current = true
         if (timerRef.current) clearTimeout(timerRef.current)
 
-        
-        const containerRect = container.getBoundingClientRect()
-        const elRect = el.getBoundingClientRect()
-        const targetScrollTop = container.scrollTop + (elRect.top - containerRect.top) - offset
+        if (container) {
+            const containerRect = container.getBoundingClientRect()
+            const elRect = el.getBoundingClientRect()
+            const scrollTarget = container.scrollTop + (elRect.top - containerRect.top) - offset
 
-        container.scrollTo({ top: targetScrollTop, behavior: 'smooth' })
+            container.scrollTo({ top: scrollTarget, behavior: 'smooth' })
+        } else {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
 
-        
         timerRef.current = setTimeout(() => {
             isProgrammaticRef.current = false
-        }, 700)
-    }
+        }, 800)
+    }, [scrollerId, offset])
 
     return { activeId, scrollToSection }
 }

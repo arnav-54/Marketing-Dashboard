@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { TrendingUp, Calculator, RefreshCcw, DollarSign } from 'lucide-react'
 
 const INR = (val) =>
     '₹' + Math.round(val).toLocaleString('en-IN')
 
 export default function BudgetSimulator({ channels }) {
-    
+
     const initialAllocations = useMemo(() => {
         return channels.map(ch => ({
             name: ch.name,
@@ -17,6 +17,10 @@ export default function BudgetSimulator({ channels }) {
 
     const [allocations, setAllocations] = useState(initialAllocations)
 
+    useEffect(() => {
+        setAllocations(initialAllocations)
+    }, [initialAllocations])
+
     const handleSpendChange = (name, newSpend) => {
         setAllocations(prev => prev.map(a =>
             a.name === name ? { ...a, spend: Math.max(0, parseFloat(newSpend)) } : a
@@ -25,7 +29,7 @@ export default function BudgetSimulator({ channels }) {
 
     const reset = () => setAllocations(initialAllocations)
 
-    
+
     const originalTotalSpend = initialAllocations.reduce((sum, a) => sum + a.originalSpend, 0)
     const newTotalSpend = allocations.reduce((sum, a) => sum + a.spend, 0)
 

@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import {
     LayoutGrid, Globe, CalendarDays, TrendingUp,
-    Lightbulb, Settings, Sparkles, ChevronRight, X, LogOut
+    Lightbulb, Settings, Sparkles, ChevronRight, ChevronLeft, X, LogOut, PanelLeftClose, PanelLeftOpen
 } from 'lucide-react'
 
 import { useAuth } from '../context/AuthContext'
@@ -15,8 +16,8 @@ export const NAV_ITEMS = [
 
 export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
     const { user, logout } = useAuth()
+    const [isCollapsed, setIsCollapsed] = useState(false)
 
-    // Get initials from user name
     const getInitials = (name) => {
         if (!name) return '??'
         const parts = name.split(' ')
@@ -25,22 +26,28 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
     }
 
     const userName = user?.name || 'Guest User'
-    const userRole = user?.email === 'admin@marketingos.com' ? 'Admin' : 'Member'
 
     return (
         <aside
             id="sidebar-nav"
-            className={`sidebar${isOpen ? ' sidebar--open' : ''}`}
+            className={`sidebar${isOpen ? ' sidebar--open' : ''}${isCollapsed ? ' sidebar--collapsed' : ''}`}
             role="navigation"
             aria-label="Dashboard navigation"
         >
-            {/* Logo */}
             <div className="logo-area">
                 <div className="logo-main">
-                    <div className="logo-icon" aria-hidden="true"><Sparkles size={20} /></div>
+                    <img src="/logo.png" alt="MarketingOS Logo" style={{ width: '32px', height: '32px', objectFit: 'contain' }} />
                     <span className="logo-text">MarketingOS</span>
                 </div>
-                {/* Mobile Close Button */}
+
+                <button
+                    className="sidebar-collapse-btn"
+                    onClick={() => setIsCollapsed(!isCollapsed)}
+                    aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                >
+                    {isCollapsed ? <PanelLeftOpen size={20} /> : <PanelLeftClose size={20} />}
+                </button>
+
                 <button
                     className="sidebar-close-btn"
                     onClick={onClose}
@@ -50,11 +57,10 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </button>
             </div>
 
-            {/* Navigation */}
             <nav aria-label="Main sections">
                 <ul className="nav-section" role="list">
                     {NAV_ITEMS.map(({ id, label, icon: Icon }) => {
-                        const isActive = activeId === id
+                        const isActive = activeId === id || (activeId === 'section-simulator' && id === 'section-monthly')
                         return (
                             <li key={id} role="listitem">
                                 <button
@@ -63,17 +69,18 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                                     onClick={() => onNavClick(id)}
                                     aria-current={isActive ? 'page' : undefined}
                                     aria-label={`Navigate to ${label} section`}
+                                    title={isCollapsed ? label : undefined}
                                 >
                                     <span className="nav-item-content">
                                         <Icon size={20} aria-hidden="true" />
-                                        <span>{label}</span>
+                                        <span className="nav-label">{label}</span>
                                     </span>
-                                    <ChevronRight
+                                    {!isCollapsed && <ChevronRight
                                         size={16}
                                         className="nav-chevron"
                                         aria-hidden="true"
                                         style={{ opacity: isActive ? 1 : 0.35 }}
-                                    />
+                                    />}
                                 </button>
                             </li>
                         )
@@ -81,19 +88,24 @@ export default function Sidebar({ activeId, onNavClick, isOpen, onClose }) {
                 </ul>
             </nav>
 
-            {/* User Profile & Logout */}
             <div className="sidebar-footer">
                 <div className="sidebar-user-container">
                     <div className="sidebar-user" aria-label={`Logged in as ${userName}`}>
-                        <div className="sidebar-avatar" aria-hidden="true">{getInitials(userName)}</div>
+                        <div className="sidebar-avatar" aria-hidden="true">{getInitials(userName.replace(/ Member$/i, ''))}</div>
                         <div className="sidebar-user-info">
-                            <span className="sidebar-user-name">{userName}</span>
-                            <span className="sidebar-user-role">{userRole}</span>
+                            <span className="sidebar-user-name">{userName.replace(/ Member$/i, '')}</span>
                         </div>
                     </div>
-                    <button className="sidebar-logout-btn" onClick={logout} title="Log Out" aria-label="Log Out">
-                        <LogOut size={18} />
-                    </button>
+                    {!isCollapsed && (
+                        <button className="sidebar-logout-btn" onClick={logout} title="Log Out" aria-label="Log Out">
+                            <LogOut size={18} />
+                        </button>
+                    )}
+                    {isCollapsed && (
+                        <button className="sidebar-logout-btn collapsed" onClick={logout} title="Log Out" aria-label="Log Out" style={{ marginLeft: 'auto' }}>
+                            <LogOut size={18} />
+                        </button>
+                    )}
                 </div>
             </div>
         </aside>

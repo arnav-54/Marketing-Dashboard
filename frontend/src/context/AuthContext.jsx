@@ -49,7 +49,6 @@ export function AuthProvider({ children }) {
         })
         const data = await res.json()
         if (data.success) {
-            // After register, we usually want to log them in automatically
             return login(email, password)
         }
         return { success: false, message: data.message }
